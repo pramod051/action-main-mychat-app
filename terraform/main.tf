@@ -64,7 +64,7 @@ resource "aws_instance" "app_server" {
               sudo systemctl start docker
               sudo docker run -d -p 3000:3000 ${var.docker_images["frontend"]}
 	      sudo docker run -d -p 5000:5000 ${var.docker_images["backend"]}
-	      sudo docker run -d -p 27017:27017 ${var.docker_images["mongo"]}
+#	      sudo docker run -d -p 27017:27017 ${var.docker_images["mongo"]}
               EOF
 
   tags = {
