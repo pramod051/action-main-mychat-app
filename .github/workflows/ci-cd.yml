@@ -26,14 +26,14 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Build Backend image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-backend:${{ github.sha }} ./backend
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-backend:${{ github.sha }} ./backend/Dockerfile
 
       - name: Build Frontend image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-frontend:${{ github.sha }} ./frontend
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-frontend:${{ github.sha }} ./frontend/Dockerfile
 
       # OPTIONAL — remove if using official Mongo image
-      - name: Build Mongo image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-mongo:${{ github.sha }} ./mongo
+      # - name: Build Mongo image
+       # run: docker build -t ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-mongo:${{ github.sha }} ./mongo
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2
@@ -45,16 +45,16 @@ jobs:
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-backend:${{ github.sha }}
           docker push ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-frontend:${{ github.sha }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-mongo:${{ github.sha }}
+        #  docker push ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-mongo:${{ github.sha }}
 
           # Tag also as latest (recommended for Terraform/EC2)
           docker tag ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-backend:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-backend:latest
           docker tag ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-frontend:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-frontend:latest
-          docker tag ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-mongo:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-mongo:latest
+         # docker tag ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-mongo:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-mongo:latest
 
           docker push ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-backend:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-frontend:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-mongo:latest
+         # docker push ${{ secrets.DOCKER_USERNAME }}/devops-chat-app-mongo:latest
 
   deploy:
     needs: build
