@@ -45,3 +45,7 @@
     "react-scripts": "5.0.1"
   }
 }
+
+"scripts": {
+  "test": "echo \"No tests configured\""
+}
