@@ -25,7 +25,7 @@ app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Database connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/talkwithteams')
+mongoose.connect(process.env.MONGODB_URI || '3.6.196.17://mongodb:27017/talkwithteams')
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
 
