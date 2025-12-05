@@ -7,11 +7,19 @@ variable "ami_id" {
 }
 
 variable "docker_images" {
-  type        = map(string)
+  type = map(string)
   description = "Docker images for each service"
   default = {
     frontend = "pramod051/devops-app-frontend:latest"
     backend  = "pramod051/devops-app-backend:latest"
-#    mongo    = "pramod051/devops-app-mongo:latest"
+#    mongo    = "pramod051/devops-chat-app-mongo:latest"
   }
 }
+
+
+
+#variable "docker_image"{
+#  default = "pramod051/devops-chat-app-backend:latest"
+#  default = "pramod051/devops-chat-app-frontend:latest"
+#  default = "pramod051/devops-chat-app-mongo:latest"
+#}

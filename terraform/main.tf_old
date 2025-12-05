@@ -22,14 +22,14 @@ resource "aws_security_group" "app_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
+ingress {
     from_port   = 5000
     to_port     = 5000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
+ingress {
     from_port   = 27017
     to_port     = 27017
     protocol    = "tcp"
@@ -54,32 +54,16 @@ resource "aws_security_group" "app_sg" {
 resource "aws_instance" "app_server" {
   ami           = var.ami_id
   instance_type = "t2.micro"
+  
   vpc_security_group_ids = [aws_security_group.app_sg.id]
-
+  
   user_data = <<-EOF
               #!/bin/bash
-              sudo apt update -y
+              sudo apt update
               sudo apt install -y docker.io
               sudo systemctl start docker
-              sudo systemctl enable docker
-
-              sudo docker pull ${var.docker_images["frontend"]}
-              sudo docker pull ${var.docker_images["backend"]}
-              sudo docker pull mongo:6
-		
-	      sudo docker volume create mongo-data
-
-              sudo docker run -d --restart always \
-                -p 27017:27017 \
-                -v mongo-data:/data/db \
-                --name mongo \
-                mongo:6
-
-              sudo docker run -d --restart always -p 3000:3000 ${var.docker_images["frontend"]}
-
-              sudo docker run -d --restart always -p 5000:5000 \
-                -e MONGO_URL="mongodb://localhost:27017/talkwithteams" \
-                ${var.docker_images["backend"]}
+              sudo docker run -d -p 3000:3000 ${var.docker_images["frontend"]}
+	      sudo docker run -d -p 5000:5000 ${var.docker_images["backend"]}
               EOF
 
   tags = {
