@@ -67,16 +67,16 @@ resource "aws_instance" "app_server" {
               sudo docker pull ${var.docker_images["backend"]}
               sudo docker pull mongo:6
 		
-	      sudo docker volume create mongo-data
+#	      sudo docker volume create mongo-data
 
-              sudo docker run -d --restart always \
-                -p 27017:27017 \
-                -v mongo-data:/data/db \
-                --name mongo \
-                mongo:6
+ #             sudo docker run -d --restart always \
+ #              -p 27017:27017 \
+ #               -v mongo-data:/data/db \
+ #               --name mongo \
+ #              mongo:6
 
-              sudo docker run -d --restart always -p 3000:3000 ${var.docker_images["frontend"]}
-	      sudo docker run -d --restart always -p 5000:5000 ${var.docker_images["backend"]}
+              sudo docker run -d -p 3000:3000 ${var.docker_images["frontend"]}
+	      sudo docker run -d -p 5000:5000 ${var.docker_images["backend"]}
 
 #              sudo docker run -d --restart always -p 5000:5000 \
 #               -e MONGO_URL="mongodb://localhost:27017/talkwithteams" \

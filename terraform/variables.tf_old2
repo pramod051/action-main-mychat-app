@@ -12,5 +12,6 @@ variable "docker_images" {
   default = {
     frontend = "pramod051/devops-app-frontend:latest"
     backend  = "pramod051/devops-app-backend:latest"
+#    mongo    = "pramod051/devops-app-mongo:latest"
   }
 }
